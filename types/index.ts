@@ -1,12 +1,12 @@
-type ID = string;
+export type ID = string;
 
-interface Column {
+export interface Column {
   id: ID;
   title: string;
   tasks: Task[];
 }
 
-interface Task {
+export interface Task {
   id: ID;
   title: string;
   createdAt: Date;
