@@ -1,6 +1,7 @@
 <script setup lang="ts">
+import type { Task } from "@/types";
 import { nanoid } from "nanoid";
-import { Task } from "types";
+
 const emit = defineEmits<{
   (e: "add", payload: Task): void;
 }>();
@@ -26,7 +27,7 @@ function createTask(e: Event) {
       v-model="title"
       @keydown.tab="createTask"
       @keyup.enter="createTask"
-      class="focus:bg-white resize-none rounded w-full border-"
+      class="focus:bg-white focus:shadow resize-none rounded w-full border-none bg-transparent p-2 cursor-pointer"
       :class="{
         'h-7': !focused,
         'h-20': focused,
@@ -34,7 +35,7 @@ function createTask(e: Event) {
       style="outline: none !important"
       @focus="focused = true"
       @blur="focused = false"
-      :placeholder="!focused ? '+ Add A Card' : 'Enter a title for card'"
-    ></textarea>
+      :placeholder="!focused ? '+ Add A Card' : 'Enter a title for this card'"
+    />
   </div>
 </template>
