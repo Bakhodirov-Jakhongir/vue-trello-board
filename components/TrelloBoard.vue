@@ -69,9 +69,27 @@ const columns = ref<Column[]>([
   },
 ]);
 const alt = useKeyModifier("Alt");
+
+function createColumn() {
+  const column: Column = {
+    id: nanoid(),
+    title: "",
+    tasks: [],
+  };
+
+  columns.value.push(column);
+ 
+  nextTick(() => {
+    (
+      document.querySelector(
+        ".column:last-of-type .title-input"
+      ) as HTMLInputElement
+    ).focus();
+  });
+}
 </script>
 <template>
-  <div>
+  <div class="flex items-start overflow-x-auto gap-4">
     <draggable
       v-model="columns"
       group="columns"
@@ -88,7 +106,7 @@ const alt = useKeyModifier("Alt");
           <header class="font-bold mb-4">
             <DragHandle />
             <input
-              class="bg-transparent foucs:bg-white rounded px-1 w-4/5"
+              class="title-input bg-transparent foucs:bg-white rounded px-1 w-4/5"
               @keyup.enter="($event.target as HTMLInputElement).blur()"
               type="text"
               v-model="column.title"
@@ -118,5 +136,11 @@ const alt = useKeyModifier("Alt");
         </div>
       </template>
     </draggable>
+    <button
+      @click="createColumn"
+      class="bg-gray-200 whitespace-nowrap p-2 rounded opa city-50"
+    >
+      + Add Another Column
+    </button>
   </div>
 </template>
