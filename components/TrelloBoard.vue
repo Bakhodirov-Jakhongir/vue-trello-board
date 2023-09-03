@@ -2,7 +2,7 @@
 import { ref } from "vue";
 import TrelloBoardTask from "./TrelloBoardTask.vue";
 import DragHandle from "./DragHandle.vue";
-import type { Column } from "../types/index";
+import type { Column, Task } from "../types/index";
 import draggable from "vuedraggable";
 import { nanoid } from "nanoid";
 const columns = ref<Column[]>([
@@ -13,6 +13,11 @@ const columns = ref<Column[]>([
       {
         id: nanoid(),
         title: "Test ttitle task",
+        createdAt: new Date(),
+      },
+      {
+        id: nanoid(),
+        title: "Test ttitle task 2",
         createdAt: new Date(),
       },
     ],
@@ -79,10 +84,20 @@ const columns = ref<Column[]>([
           class="column bg-gray-200 p-5 rounded min-w-[250px]"
         >
           <header class="font-bold mb-4">
-            <DragHandle/>
+            <DragHandle />
             {{ column.title }}
           </header>
-          <TrelloBoardTask v-for="task in column.tasks" :task="task" />
+          <draggable
+            v-model="column.tasks"
+            group="tasks"
+            item-key="id"
+            :animation="150"
+            handle=".drag-handle"
+          >
+            <template #item="{ element: task }: { element: Task }">
+              <TrelloBoardTask :task="task" />
+            </template>
+          </draggable>
           <footer>
             <button class="text-gray-500">+ Add to Cart</button>
           </footer>
