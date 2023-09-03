@@ -87,7 +87,12 @@ const alt = useKeyModifier("Alt");
         >
           <header class="font-bold mb-4">
             <DragHandle />
-            {{ column.title }}
+            <input
+              class="bg-transparent foucs:bg-white rounded px-1 w-4/5"
+              @keyup.enter="($event.target as HTMLInputElement).blur()"
+              type="text"
+              v-model="column.title"
+            />
           </header>
           <draggable
             v-model="column.tasks"
